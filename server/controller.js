@@ -19,7 +19,7 @@ module.exports = {
                 name varchar
             );
 
-            create table cites (
+            create table cities (
                 city_id serial primary key, 
                 name varchar(255),
                 rating interger,
@@ -240,7 +240,7 @@ module.exports = {
     sequalize
       .query(
         `
-        INSERT INTO cites (name, rating, countryId)
+        INSERT INTO cities (name, rating, countryId)
         VALUES ('${name}', ${rating}, ${countryId});
     `
       )
@@ -249,12 +249,12 @@ module.exports = {
       })
       .catch((err) => console.error(err));
   },
-  getCites: (req, res) => {
+  getCities: (req, res) => {
     sequelize
       .query(
         `
       SELECT city_id, ci.name As city, rating, ci.country_id AS country
-      FROM cites ci
+      FROM cities ci
       JOIN countries co
       On ci.country_id = co.country_id;
       `
@@ -263,12 +263,12 @@ module.exports = {
         res.status(200).send(dbRes[0]);
       });
   },
-  deleteCites: (req, res) => {
+  deleteCities: (req, res) => {
     const { id } = req.params;
     sequelize
       .query(
         `
-        DELETE FROM cites
+        DELETE FROM cities
         WHERE city_id = ${id}
         `
       )
